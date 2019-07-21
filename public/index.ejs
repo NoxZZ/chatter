@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+  <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -7,21 +7,7 @@
     <title>Chatter.io</title>
     <script src="/socket.io/socket.io.js"></script>
     <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
-<script>
-  $(function () {
-    var socket = io();
-    $('form').submit(function(e){
-      e.preventDefault(); // prevents page reloading
-      socket.emit('user name',$('#userName').val());
-      socket.emit('chat message', $('#m').val());
-      $('#m').val('');
-      return false;
-    });
-    socket.on('chat message', function(msg){
-      $('#messages').append($('<li>').text(msg));
-    });
-  });
-</script>
+<script src="client.js"></script>
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body { font: 13px Helvetica, Arial; }
@@ -33,12 +19,13 @@
   #messages li:nth-child(odd) { background: #eee; }
 </style>
 </head>
-<body>  
+<body>
+  <h3>Enter your nickname</h3>
+  <input type="text" id="nickName"><button>Enter</button>  
     <ul id="messages">
     </ul>
     <form action="">
-      
-      <input id="m" autocomplete="off" placeholder="Enter text message..."/><button>Send</button>
+      <input id="message" autocomplete="off" placeholder="Enter text message..."/><button id="send_message">Send</button>
     </form>
 </body>
 </html>
