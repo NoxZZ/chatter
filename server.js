@@ -16,21 +16,24 @@ app.get('/',(req,res) => {
     console.log(`requested on ${req.path}`);
     res.render(path.join(__dirname,'/public/index'));
 });
-users = {};
+users = [];
 io.on('connect',function(socket){
             console.log("user connected...");
         
-            //calling event 'change nickname' :
-            socket.on('send_nickname', function(nickname) {
-                socket.nickname = nickname;
-                users.push(socket.nickname);
+            //calling event 'change username' :
+            //default username:
+            socket.username = "anonymous"
+            socket.on('change_username', function(data) {
+                console.log(data);
+                socket.username = data.username;
+                users.push(socket.username);
                 console.log(users);
         });
 
             //calling event 'displaying message to connected users':
-        socket.on('new_message',function(msg) {
-            io.emit('new_message',msg);
-            console.log('message :', msg);
+        socket.on('new_message',function(data) {
+            io.emit('new_message',{message : data.message,username : socket.username});
+            console.log('message :', data.message,socket.username);
     });
         //on user disconnecting :
         socket.on('disconnect', function(){
