@@ -36,8 +36,9 @@ io.on('connect',function(socket){
             console.log('message :', data.message,socket.username);
     });
         //on user disconnecting :
-        socket.on('disconnect', function(){
-            console.log('user disconnected');
+        socket.on('disconnect', function(data){
+            io.emit('disconnected_user',{username : socket.username})
+            console.log(`user ${socket.username} disconnected`);
           });
 });
 

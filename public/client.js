@@ -10,12 +10,18 @@ $(function () {
         socket.emit('new_message',{message : message.val()});
         message.val();
     })
+    //change username event
     userName.click(function() {
       console.log(userNameVal.val());
       socket.emit('change_username',{username : userNameVal.val()})
     })
+    //new message event
     socket.on('new_message', function(data){
       console.log()
         $('#messages').append(('<li>') + data.username + (' : ')+ data.message);
+      });
+      socket.on('disconnected_user', (data) => {
+        console.log(data.username ,'disconn');
+        $('#disconnectedUser').append((' <p> ') + data.username + '  disconnected ');
       });
   });
